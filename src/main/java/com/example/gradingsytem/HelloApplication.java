@@ -34,9 +34,11 @@ public class HelloApplication extends Application {
 
            //window -> stage
            window = stage;
-           window.setTitle("Grading System");
+           window.setTitle("GradE Calculator");
+           //Two image stream ->IMAGE AND ICON
            InputStream stream = new FileInputStream("C:/Users/User/IdeaProjects/GradingSytem/src/images/icon/icon.png");
            InputStream stream1 = new FileInputStream("C:/Users/User/IdeaProjects/GradingSytem/src/images/icon/grades.png");
+           //setIcon
            Image image = new Image(stream);
            Image image1 = new Image(stream1);
            window.getIcons().add(image);
@@ -44,8 +46,8 @@ public class HelloApplication extends Application {
 
            //setText , image , Button
            Text text = new Text();
-           text.setText("Welcome to You in Grading System");
-           text.setFont(Font.font("Courier", FontWeight.BOLD , 14));
+           text.setText("You are welcome to our Grading Calculator");
+           text.setFont(Font.font("Courier", FontWeight.BOLD , 16));
 
            ImageView imageView = new ImageView();
            imageView.setImage(image1);
@@ -56,23 +58,14 @@ public class HelloApplication extends Application {
 
            Button button = new Button("Next");
            button.setFont(Font.font("Courier", FontWeight.BOLD , 16));
-
-
-           //css
-           //Styling nodes
            button.setStyle("-fx-background-color: darkslateblue; -fx-text-fill: white;");
            text.setFill(Color.WHITE);
 
-
-
-           //eventHandaling
+           //event-Handler
            button.setOnAction(e -> {
                window.hide();
                DashBoard.MenuBarSite();
-
            });
-
-
 
 
            //Layout
@@ -84,21 +77,13 @@ public class HelloApplication extends Application {
            StackPane.setAlignment(button , Pos.BOTTOM_CENTER);
            layout.setStyle("-fx-background-color: yellowgreen;");
 
-
-
            //Scene
            Scene scene = new Scene(layout,400,400);
-
            //window
            window.setScene(scene);
            window.show();
-
-
        }catch(Exception e){
            e.printStackTrace();
        }
-
     }
-
-
 }

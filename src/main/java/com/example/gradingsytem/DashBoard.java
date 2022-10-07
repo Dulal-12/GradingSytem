@@ -1,5 +1,4 @@
 package com.example.gradingsytem;
-
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -10,7 +9,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 import java.io.FileInputStream;
 import java.io.InputStream;
@@ -22,11 +20,10 @@ public class DashBoard {
         try{
             //setWindow and it's name and icon
             Stage window = new Stage();
-            window.setTitle("Grading System");
+            window.setTitle("GradE Calculator");
             InputStream stream = new FileInputStream("C:/Users/User/IdeaProjects/GradingSytem/src/images/icon/icon.png");
             Image image = new Image(stream);
             window.getIcons().add(image);
-            //window.initModality(Modality.APPLICATION_MODAL);
 
             // create two menu
             Menu m = new Menu("Semester");
@@ -35,18 +32,18 @@ public class DashBoard {
             // create menuitems
             MenuItem m1 = new MenuItem("Summer 2022");
             MenuItem m2 = new MenuItem("Fall 2022");
-            MenuItem m3 = new MenuItem("Spring 2022");
+
 
             // add menu items to menu
             m.getItems().add(m1);
             m.getItems().add(m2);
-            m.getItems().add(m3);
 
+
+            //set menu into menubar
             MenuBar mb = new MenuBar();
             mb.getMenus().addAll(m , res);
 
             //Create label , TextField
-
             Label summerLabel = new Label("SUMMER 2022");
             summerLabel.setTextFill(Color.DARKSLATEBLUE);
             summerLabel.setFont(Font.font("Courier", FontWeight.BOLD , 20));
@@ -90,17 +87,11 @@ public class DashBoard {
 
             Button button = new Button("Click");
             button.setFont(Font.font("Courier", FontWeight.BOLD , 16));
+            button.setStyle("-fx-background-color: darkslateblue; -fx-text-fill: white;");
 
             Text lastLabel = new Text();
             lastLabel.setFill(Color.RED);
             lastLabel.setFont(Font.font("Courier", FontWeight.BOLD , 13));
-
-
-            //css
-            //Styling nodes
-            button.setStyle("-fx-background-color: darkslateblue; -fx-text-fill: white;");
-
-
 
             // create a VBox
             VBox vb = new VBox(mb,summerLabel,userId , user_id,advanced_java , advanced_java_number ,advanced_java_lab,advanced_java_lab_number , evs,environment_number ,iit,iit_number,button,lastLabel);
@@ -109,7 +100,7 @@ public class DashBoard {
             VBox.setMargin(button,new Insets(20,20,20,20));
             vb.setAlignment(Pos.TOP_CENTER);
 
-            //eventHandaling
+            //event-Handler
 
             button.setOnAction(e->{
                 String stu = user_id.getText().toString();
@@ -146,6 +137,11 @@ public class DashBoard {
                 else{
                     lastLabel.setText("Your Input field is Empty");
                 }
+            });
+
+            m2.setOnAction(e->{
+                window.hide();
+                FallSemester.fall();
             });
 
 
