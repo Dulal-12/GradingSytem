@@ -51,24 +51,26 @@ public class HelloApplication extends Application {
            imageView.setImage(image1);
            imageView.setX(10);
            imageView.setY(10);
-           imageView.setFitWidth(105);
+           imageView.setFitWidth(150);
            imageView.setPreserveRatio(true);
 
            Button button = new Button("Next");
-           button.setFont(Font.font("Courier", FontWeight.BOLD , 14));
+           button.setFont(Font.font("Courier", FontWeight.BOLD , 16));
 
 
            //css
            //Styling nodes
            button.setStyle("-fx-background-color: darkslateblue; -fx-text-fill: white;");
-           text.setFill(Color.BROWN);
-           text.setStrokeWidth(.2);
-           text.setStroke(Color.BLUE);
+           text.setFill(Color.WHITE);
+
 
 
            //eventHandaling
+           button.setOnAction(e -> {
+               window.hide();
+               DashBoard.MenuBarSite();
 
-           button.setOnAction(e -> DashBoard.MenuBarSite());
+           });
 
 
 
@@ -77,9 +79,11 @@ public class HelloApplication extends Application {
            StackPane layout = new StackPane();
            layout.getChildren().addAll(text , imageView , button);
            layout.setPadding(new Insets(20,20,20,20));
-           layout.setAlignment(text , Pos.TOP_CENTER);
-           layout.setAlignment(imageView , Pos.CENTER);
-           layout.setAlignment(button , Pos.BOTTOM_CENTER);
+           StackPane.setAlignment(text , Pos.TOP_CENTER);
+           StackPane.setAlignment(imageView , Pos.CENTER);
+           StackPane.setAlignment(button , Pos.BOTTOM_CENTER);
+           layout.setStyle("-fx-background-color: yellowgreen;");
+
 
 
            //Scene
