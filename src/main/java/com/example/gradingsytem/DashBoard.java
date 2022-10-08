@@ -32,11 +32,13 @@ public class DashBoard {
             // create menuitems
             MenuItem m1 = new MenuItem("Summer 2022");
             MenuItem m2 = new MenuItem("Fall 2022");
+            MenuItem semester = new MenuItem("Semester Result");
 
 
             // add menu items to menu
             m.getItems().add(m1);
             m.getItems().add(m2);
+            res.getItems().add(semester);
 
 
             //set menu into menubar
@@ -142,6 +144,10 @@ public class DashBoard {
             m2.setOnAction(e->{
                 window.hide();
                 FallSemester.fall();
+            });
+            semester.setOnAction(e->{
+                window.close();
+                Result.resultTable();
             });
 
 
