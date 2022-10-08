@@ -9,7 +9,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
@@ -84,9 +84,11 @@ public class Result {
                 FallSemester.fall();
             });
 
-
+            String semster[] = {};
 
             button.setOnAction(e->{
+
+
 
                 String id = user_id.getText().toString();
                 if(!id.isEmpty()){
@@ -95,6 +97,7 @@ public class Result {
                     boolean   condition = id.matches("-?\\d+(.\\d+)?");
                     if(condition){
                         lastLabel.setText("");
+                        VBox vbox = new VBox();
 
                         try{
                             Class.forName("com.mysql.jdbc.Driver");
@@ -107,22 +110,48 @@ public class Result {
 
 
 
-
-
-
                             while(rs.next()){
+
                                   String user = rs.getString(2);
+                                  int i = 0;
 
                                   if(user.equals(id)){
 
-//                                      String sem = rs.getString(3);
-//                                      double tot = rs.getDouble(4);
-//                                      float avg = rs.getFloat(5);
-//                                      String gr = rs.getString(6);
-////
-//                                     ObservableList<FileData> data = FXCollections.observableArrayList(
-//                                          new FileData(id,sem,tot,avg,gr)
-//                                     );
+                                      String sem = rs.getString(3);
+                                      String gr = rs.getString(6);
+                                      double tot = rs.getDouble(4);
+                                      float avg = rs.getFloat(5);
+                                      String ui = rs.getString(2);
+
+
+                                      Label text = new Label(sem);
+                                      text.setFont(Font.font("Courier", FontWeight.BOLD , 14));
+
+                                      Label grade = new Label(gr);
+                                      text.setFont(Font.font("Courier", FontWeight.BOLD , 14));
+
+                                      Label total = new Label(""+tot);
+                                      total.setFont(Font.font("Courier", FontWeight.BOLD , 14));
+
+                                      Label average = new Label(""+avg);
+                                      average.setFont(Font.font("Courier", FontWeight.BOLD , 14));
+
+                                      Label userID = new Label(""+ui);
+                                      userID.setFont(Font.font("Courier", FontWeight.BOLD , 14));
+
+
+
+
+
+                                      HBox hb = new HBox(userID,text,grade,total,average);
+                                      hb.setSpacing(20);
+                                      hb.setPadding(new Insets(10,10,10,10));
+                                      hb.setBorder(new Border(new BorderStroke(Color.WHITE, BorderStrokeStyle.SOLID, null , null)));
+                                      vbox.setSpacing(5);
+                                      vbox.setPadding(new Insets(10, 10, 10, 10));
+                                      vbox.getChildren().addAll(hb);
+                                      vbox.setStyle("-fx-background-color: yellowgreen;");
+                                      vbox.setAlignment(Pos.TOP_CENTER);
 
 
 
@@ -134,26 +163,22 @@ public class Result {
                             conn.close();
 
 
-
-                            VBox vbox = new VBox();
-                            vbox.setSpacing(5);
-                            vbox.setPadding(new Insets(10, 10, 10, 10));
-                            vbox.getChildren().addAll();
-                            vbox.setStyle("-fx-background-color: yellowgreen;");
                             Stage win = new Stage();
                             Scene scene = new Scene(vbox, 400, 400);
                             win.setScene(scene);
                             win.setResizable(false);
                             win.setTitle("GradE Calculator");
                             //Two image stream ->IMAGE AND ICON
-                          try{
-                              InputStream stream2 = new FileInputStream("C:/Users/User/IdeaProjects/GradingSytem/src/images/icon/icon.png");
-                              Image image2 = new Image(stream2);
-                              win.getIcons().add(image2);
-                          }catch(Exception ex){
-                              ex.printStackTrace();
-                          }
+                            try{
+                                InputStream stream2 = new FileInputStream("C:/Users/User/IdeaProjects/GradingSytem/src/images/icon/icon.png");
+                                Image image2 = new Image(stream2);
+                                win.getIcons().add(image2);
+                            }catch(Exception ex){
+                                ex.printStackTrace();
+                            }
                             win.show();
+
+
 
 
 
