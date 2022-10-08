@@ -125,7 +125,7 @@ public class DashBoard {
                     }
                     if(condition){
 
-                       Calculation.calculateResult(aj , ajl , evss , iitn);
+                       Calculation.calculateResult("summer",stu,aj , ajl , evss , iitn);
                        lastLabel.setText("");
 
                     }

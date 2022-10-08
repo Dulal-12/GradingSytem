@@ -16,7 +16,7 @@ import java.io.InputStream;
 
 public class AlertBox {
 
-    public static void message(){
+    public static void message(String message){
         try{
             //window -> stage
             Stage window = new Stage();
@@ -29,7 +29,8 @@ public class AlertBox {
             window.setResizable(false);
 
 
-            Text text = new Text("Don't be smart. Number 0-100");
+            Text text = new Text();
+            text.setText(message);
             text.setFill(Color.RED);
             text.setFont(Font.font("Courier", FontWeight.BOLD , 13));
 
