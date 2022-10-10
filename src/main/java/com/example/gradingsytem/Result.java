@@ -2,8 +2,6 @@ package com.example.gradingsytem;
 
 
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -15,44 +13,50 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-
-
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.sql.*;
+
+import static com.example.gradingsytem.Welcome.icon;
 
 public class Result {
 
     public static void resultTable(){
         try {
+              /* stage as window
+            set title
+            set icon
+            not resize window
+             */
             Stage window = new Stage();
             window.setTitle("GradE Calculator");
-            //Two image stream ->IMAGE AND ICON
-            InputStream stream = new FileInputStream("C:/Users/User/IdeaProjects/GradingSytem/src/images/icon/icon.png");
-            InputStream stream1 = new FileInputStream("C:/Users/User/IdeaProjects/GradingSytem/src/images/icon/grades.png");
-            //setIcon
-            Image image = new Image(stream);
-            Image image1 = new Image(stream1);
+            InputStream icon_image = new FileInputStream(icon);
+            Image image = new Image(icon_image);
             window.getIcons().add(image);
             window.setResizable(false);
 
-
-            Menu m = new Menu("Semester");
-            Menu res = new Menu("Result");
+            /*
+            MenuBar
+            Menu
+            MenuItem
+             */
+            MenuBar mb = new MenuBar();
+            Menu first_menu = new Menu("Semester");
+            Menu second_menu = new Menu("Result");
 
             // create menuitems
-            MenuItem m1 = new MenuItem("Summer 2022");
-            MenuItem m2 = new MenuItem("Fall 2022");
-
+            MenuItem menuItem_semester_summer = new MenuItem("Summer 2022");
+            MenuItem menuItem_semester_fall = new MenuItem("Fall 2022");
+            MenuItem semester_result = new MenuItem("Semester Result");
 
             // add menu items to menu
-            m.getItems().add(m1);
-            m.getItems().add(m2);
-
+            first_menu.getItems().add(menuItem_semester_summer);
+            first_menu.getItems().add(menuItem_semester_fall);
+            second_menu.getItems().add(semester_result);
 
             //set menu into menubar
-            MenuBar mb = new MenuBar();
-            mb.getMenus().addAll(m, res);
+            mb.getMenus().addAll(first_menu , second_menu);
+
 
             Label userId = new Label("User Id");
             userId.setTextFill(Color.WHITE);
@@ -70,39 +74,42 @@ public class Result {
             lastLabel.setFont(Font.font("Courier", FontWeight.BOLD , 13));
 
 
-
-
-
-            //event
-            m1.setOnAction(e->{
+            //event-handler
+            menuItem_semester_summer.setOnAction(e->{
                 window.close();
                 SummerSemester.summerSemesterSite();
             });
 
-            m2.setOnAction(e->{
+            menuItem_semester_fall.setOnAction(e->{
                 window.hide();
                 FallSemester.fall();
             });
 
-            String semster[] = {};
+
 
             button.setOnAction(e->{
-
-
 
                 String id = user_id.getText().toString();
                 if(!id.isEmpty()){
 
                     lastLabel.setText("");
                     boolean   condition = id.matches("-?\\d+(.\\d+)?");
+
                     if(condition){
                         lastLabel.setText("");
                         VBox vbox = new VBox();
-
                         try{
-                            Class.forName("com.mysql.jdbc.Driver");
 
-                            Connection conn= DriverManager.getConnection("jdbc:mysql://localhost:3306/gradecalculator","root","");
+                            String driver = "com.mysql.jdbc.Driver";
+                            String url = "jdbc:mysql://localhost:3306/gradecalculator";
+                            String user1 = "root";
+                            String password = "";
+
+                                    /*
+                                    jdbc connection
+                                     */
+                            Class.forName(driver);
+                            Connection conn= DriverManager.getConnection(url, user1,password);
 
                             Statement stmt  = conn.createStatement();
                             String sql = "SELECT * from result " ;
@@ -113,7 +120,6 @@ public class Result {
                             while(rs.next()){
 
                                   String user = rs.getString(2);
-                                  int i = 0;
 
                                   if(user.equals(id)){
 
@@ -141,8 +147,6 @@ public class Result {
 
 
 
-
-
                                       HBox hb = new HBox(userID,text,grade,total,average);
                                       hb.setSpacing(20);
                                       hb.setPadding(new Insets(10,10,10,10));
@@ -152,8 +156,6 @@ public class Result {
                                       vbox.getChildren().addAll(hb);
                                       vbox.setStyle("-fx-background-color: yellowgreen;");
                                       vbox.setAlignment(Pos.TOP_CENTER);
-
-
 
                                   }
 
@@ -177,10 +179,6 @@ public class Result {
                                 ex.printStackTrace();
                             }
                             win.show();
-
-
-
-
 
                         }catch(Exception ex){
                             ex.printStackTrace();
@@ -212,15 +210,5 @@ public class Result {
 
 
     }
-
-    public static ObservableList<FileData> getData(String id, String sem,double tot,float avg,String  gr){
-
-        ObservableList<FileData>data = FXCollections.observableArrayList();
-        data.add(new FileData(id,sem,tot,avg,gr));
-
-        return data;
-    }
-
-
 
 }

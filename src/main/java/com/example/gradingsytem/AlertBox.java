@@ -2,7 +2,6 @@ package com.example.gradingsytem;
 
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -14,17 +13,21 @@ import javafx.stage.Stage;
 import java.io.FileInputStream;
 import java.io.InputStream;
 
+import static com.example.gradingsytem.Welcome.icon;
+
 public class AlertBox {
 
     public static void message(String message){
         try{
-            //window -> stage
+            /* stage as window
+            set title
+            set icon
+            not resize window
+             */
             Stage window = new Stage();
-            window.setTitle("Grading System");
-            InputStream stream = new FileInputStream("C:/Users/User/IdeaProjects/GradingSytem/src/images/icon/icon.png");
-            InputStream stream1 = new FileInputStream("C:/Users/User/IdeaProjects/GradingSytem/src/images/icon/grades.png");
-            Image image = new Image(stream);
-            Image image1 = new Image(stream1);
+            window.setTitle("GradE Calculator");
+            InputStream icon_image = new FileInputStream(icon);
+            Image image = new Image(icon_image);
             window.getIcons().add(image);
             window.setResizable(false);
 
@@ -41,6 +44,7 @@ public class AlertBox {
             Scene scene = new Scene(layout , 400,400);
             window.setScene(scene);
             window.show();
+
         }catch(Exception e){
             e.printStackTrace();
         }
