@@ -1,4 +1,5 @@
 package com.example.gradingsytem;
+import javafx.css.converter.SizeConverter;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -13,39 +14,50 @@ import javafx.stage.Stage;
 import java.io.FileInputStream;
 import java.io.InputStream;
 
-public class DashBoard {
+import static com.example.gradingsytem.Welcome.icon;
 
-    public static void MenuBarSite(){
+public class SummerSemester {
+
+    public static void summerSemesterSite(){
 
         try{
-            //setWindow and it's name and icon
+            /* stage as window
+            set title
+            set icon
+            not resize window
+             */
             Stage window = new Stage();
             window.setTitle("GradE Calculator");
-            InputStream stream = new FileInputStream("C:/Users/User/IdeaProjects/GradingSytem/src/images/icon/icon.png");
-            Image image = new Image(stream);
+            InputStream icon_image = new FileInputStream(icon);
+            Image image = new Image(icon_image);
             window.getIcons().add(image);
+            window.setResizable(false);
 
-            // create two menu
-            Menu m = new Menu("Semester");
-            Menu res = new Menu("Result");
+            /*
+            MenuBar
+            Menu
+            MenuItem
+             */
+            MenuBar mb = new MenuBar();
+            Menu first_menu = new Menu("Semester");
+            Menu second_menu = new Menu("Result");
 
             // create menuitems
-            MenuItem m1 = new MenuItem("Summer 2022");
-            MenuItem m2 = new MenuItem("Fall 2022");
-            MenuItem semester = new MenuItem("Semester Result");
-
+            MenuItem menuItem_semester_summer = new MenuItem("Summer 2022");
+            MenuItem menuItem_semester_fall = new MenuItem("Fall 2022");
+            MenuItem semester_result = new MenuItem("Semester Result");
 
             // add menu items to menu
-            m.getItems().add(m1);
-            m.getItems().add(m2);
-            res.getItems().add(semester);
-
+            first_menu.getItems().add(menuItem_semester_summer);
+            first_menu.getItems().add(menuItem_semester_fall);
+            second_menu.getItems().add(semester_result);
 
             //set menu into menubar
-            MenuBar mb = new MenuBar();
-            mb.getMenus().addAll(m , res);
+            mb.getMenus().addAll(first_menu , second_menu);
 
-            //Create label , TextField
+
+
+            //create number field and label
             Label summerLabel = new Label("SUMMER 2022");
             summerLabel.setTextFill(Color.DARKSLATEBLUE);
             summerLabel.setFont(Font.font("Courier", FontWeight.BOLD , 20));
@@ -57,13 +69,12 @@ public class DashBoard {
             TextField user_id = new TextField();
             user_id.setMaxWidth(150);
 
+            Text advanced_java = new Text("Advanced Java");
+            advanced_java.setFill(Color.WHITESMOKE);
+            advanced_java.setFont(Font.font("Courier", FontWeight.BOLD , 13));
 
-           Text advanced_java = new Text("Advanced Java");
-           advanced_java.setFill(Color.WHITESMOKE);
-           advanced_java.setFont(Font.font("Courier", FontWeight.BOLD , 13));
-
-           TextField advanced_java_number = new TextField();
-           advanced_java_number.setMaxWidth(150);
+            TextField advanced_java_number = new TextField();
+            advanced_java_number.setMaxWidth(150);
 
 
             Text advanced_java_lab = new Text("Advanced Java Lab");
@@ -91,19 +102,21 @@ public class DashBoard {
             button.setFont(Font.font("Courier", FontWeight.BOLD , 16));
             button.setStyle("-fx-background-color: darkslateblue; -fx-text-fill: white;");
 
-            Text lastLabel = new Text();
-            lastLabel.setFill(Color.RED);
-            lastLabel.setFont(Font.font("Courier", FontWeight.BOLD , 13));
+            Text errorLabel = new Text();
+            errorLabel.setFill(Color.RED);
+            errorLabel.setFont(Font.font("Courier", FontWeight.BOLD , 13));
 
             // create a VBox
-            VBox vb = new VBox(mb,summerLabel,userId , user_id,advanced_java , advanced_java_number ,advanced_java_lab,advanced_java_lab_number , evs,environment_number ,iit,iit_number,button,lastLabel);
+            VBox vb = new VBox(mb,summerLabel,userId , user_id,advanced_java , advanced_java_number ,
+                               advanced_java_lab,advanced_java_lab_number , evs,environment_number ,
+                               iit,iit_number,button,errorLabel);
+
             vb.setStyle("-fx-background-color: yellowgreen;");
             VBox.setMargin(mb, new Insets(10,10,10,10));
             VBox.setMargin(button,new Insets(20,20,20,20));
             vb.setAlignment(Pos.TOP_CENTER);
 
             //event-Handler
-
             button.setOnAction(e->{
                 String stu = user_id.getText().toString();
                 String aj = advanced_java_number.getText().toString();
@@ -116,7 +129,7 @@ public class DashBoard {
                     boolean condition = false;
                     String[] arr = {stu , aj,ajl,evss,iitn};
                     int i = 0;
-                    lastLabel.setText("");
+                    errorLabel.setText("");
                     while(i != arr.length){
 
                         condition = arr[i].matches("-?\\d+(.\\d+)?");
@@ -128,45 +141,37 @@ public class DashBoard {
                     if(condition){
 
                        Calculation.calculateResult("summer",stu,aj , ajl , evss , iitn);
-                       lastLabel.setText("");
+                       errorLabel.setText("");
 
                     }
                     else{
-                        lastLabel.setText("All inputs should be Digit");
+                        errorLabel.setText("All inputs should be Digit");
                     }
 
                 }
                 else{
-                    lastLabel.setText("Your Input field is Empty");
+                    errorLabel.setText("Your Input field is Empty");
                 }
             });
 
-            m2.setOnAction(e->{
+
+            menuItem_semester_fall.setOnAction(e->{
                 window.hide();
                 FallSemester.fall();
             });
-            semester.setOnAction(e->{
+            semester_result.setOnAction(e->{
                 window.close();
                 Result.resultTable();
             });
 
 
-
-
-
             // create a scene
             Scene sc = new Scene(vb, 400, 400);
-
-            window.setResizable(false);
             window.setScene(sc);
-
-
-            //Event handaling
-            window.showAndWait();
+            window.show();
 
         }catch(Exception e){
             e.printStackTrace();
         }
-
     }
 }

@@ -76,7 +76,7 @@ public class Result {
             //event
             m1.setOnAction(e->{
                 window.close();
-                DashBoard.MenuBarSite();
+                SummerSemester.summerSemesterSite();
             });
 
             m2.setOnAction(e->{
